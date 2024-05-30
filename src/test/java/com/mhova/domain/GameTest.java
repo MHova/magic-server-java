@@ -1,12 +1,8 @@
 package com.mhova.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.javatuples.Pair;
@@ -15,89 +11,195 @@ import org.junit.jupiter.api.Test;
 
 class GameTest {
 	private Game game;
-	private TurnOrder mockTurnOrder;
+	private Board board;
+	private Player alice;
+	private Player bob;
 
 	@BeforeEach
 	void setup() {
-		mockTurnOrder = mock();
-		game = new Game(mockTurnOrder);
+		board = new Board();
+		alice = new Player("Alice");
+		bob = new Player("Bob");
+		game = new Game(alice, Optional.of(bob), board);
 	}
 
 	@Test
-	void noPlayers() {
-		when(mockTurnOrder.getCurrentPlayer()).thenReturn(Optional.empty());
-		Optional<Pair<Player, Step>> ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.empty(), ret);
+	void newGameWithTwoPlayers() {
+		final List<Players> active = game.getActive();
+		assertEquals(2, active.size());
+		assertEquals(Players.PLAYER_1, active.get(0));
+		assertEquals(Players.PLAYER_2, active.get(1));
+
+		final List<Players> priority = game.getPriority();
+		assertEquals(2, priority.size());
+		assertEquals(Players.PLAYER_1, priority.get(0));
+		assertEquals(Players.PLAYER_2, priority.get(1));
 	}
 
 	@Test
-	void notEndOfTurn() {
-		final Player alice = new Player("Alice");
-		when(mockTurnOrder.getCurrentPlayer()).thenReturn(Optional.of(alice));
-		Optional<Pair<Player, Step>> ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.UPKEEP)), ret);
+	void newGameWithOnePlayer() {
+		game = new Game(alice, Optional.empty(), board);
+		final List<Players> active = game.getActive();
+		assertEquals(1, active.size());
+		assertEquals(Players.PLAYER_1, active.get(0));
+
+		final List<Players> priority = game.getPriority();
+		assertEquals(1, priority.size());
+		assertEquals(Players.PLAYER_1, priority.get(0));
 	}
 	
 	@Test
-	void endOfTurn() {
-		final Player alice = new Player("Alice");
-		final Player bob = new Player("Bob");
-		Optional<Pair<Player, Step>> ret;
-		when(mockTurnOrder.getCurrentPlayer()).thenReturn(Optional.of(alice));
+	void advanceStep() {
+		// Player 1's turn
+		assertPlayer1HasPriority();
+		Pair<Players, Step> retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.UPKEEP), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.DRAW), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.MAIN_1), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.BEGINNING_OF_COMBAT), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.ATTACKERS), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.BLOCKERS), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.FIRST_STRIKE_DAMAGE), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.DAMAGE), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.END_OF_COMBAT), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.MAIN_2), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.END), retVal);
+		assertPlayer1HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.CLEANUP), retVal);
+		assertPlayer1HasPriority();
 		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.UPKEEP)), ret);
+		// Player 2's turn
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.UNTAP), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.UPKEEP), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.DRAW), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.MAIN_1), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.BEGINNING_OF_COMBAT), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.ATTACKERS), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.BLOCKERS), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.FIRST_STRIKE_DAMAGE), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.DAMAGE), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.END_OF_COMBAT), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.MAIN_2), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.END), retVal);
+		assertPlayer2HasPriority();
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_2, Step.CLEANUP), retVal);
+		assertPlayer2HasPriority();
 		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.DRAW)), ret);
+		// Back to Player 1
+		retVal = game.advanceStep();
+		assertEquals(Pair.with(Players.PLAYER_1, Step.UNTAP), retVal);
+		assertPlayer1HasPriority();
+	}
+	
+	@Test
+	void passPriority() {
+		Optional<Players> retVal = game.passPriority();
+		assertEquals(Optional.of(Players.PLAYER_2), retVal);
+		retVal = game.passPriority();
+		assertEquals(Optional.empty(), retVal);
+	}
+	
+	@Test
+	void resolveEmptyStack() {
+		Optional<Card> retVal = game.resolveStack();
+		List<Players> priority = game.getPriority();
+		assertEquals(Optional.empty(), retVal);
+		assertEquals(Players.PLAYER_1, priority.get(0));
+		assertEquals(Players.PLAYER_2, priority.get(1));
+	}
+	
+	@Test
+	void resolveNonEmptyStack() {
+		Card card = new Card("Dark Ritual");
+		board.stack.push(card);
+		Optional<Card> retVal = game.resolveStack();
+		assertEquals(Optional.of(card), retVal);
+		assertEquals(Players.PLAYER_1, game.getPriority().get(0));
+		assertEquals(Players.PLAYER_2, game.getPriority().get(1));
+	}
+	
+	@Test
+	void resolveNonEmptyStackOnPlayer2sTurn() {
+		game.advanceStep(); // UPKEEP
+		game.advanceStep(); // DRAW
+		game.advanceStep(); // MAIN 1
+		game.advanceStep(); // BEGINNING OF COMBAT
+		game.advanceStep(); // ATTACKERS
+		game.advanceStep(); // BLOCKERS
+		game.advanceStep(); // FIRST STRIKE DAMAGE
+		game.advanceStep(); // REGULAR DAMAGE
+		game.advanceStep(); // END OF COMBAT
+		game.advanceStep(); // MAIN 2
+		game.advanceStep(); // END
+		game.advanceStep(); // CLEANUP
+		game.advanceStep(); // PLAYER 2 UNTAP
+		game.advanceStep(); // PLAYER 2 UPKEEP
 		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.MAIN_1)), ret);
+		game.passPriority();
+		assertEquals(Players.PLAYER_1, game.getPriority().get(0));
 		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.BEGINNING_OF_COMBAT)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.ATTACKERS)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.BLOCKERS)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.FIRST_STRIKE_DAMAGE)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.DAMAGE)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.END_OF_COMBAT)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.MAIN_2)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.END)), ret);
-		
-		ret = game.advanceStep();
-		verify(mockTurnOrder, never()).advanceTurn();
-		assertEquals(Optional.of(Pair.with(alice, Step.CLEANUP)), ret);
-		
-		when(mockTurnOrder.advanceTurn()).thenReturn(Optional.of(bob));
-		ret = game.advanceStep();
-		verify(mockTurnOrder, times(1)).advanceTurn();
-		assertEquals(Optional.of(Pair.with(bob, Step.UNTAP)), ret);
+		Card card = new Card("Dark Ritual");
+		board.stack.push(card);
+		Optional<Card> retVal = game.resolveStack();
+		assertEquals(Optional.of(card), retVal);
+		assertEquals(Players.PLAYER_2, game.getPriority().get(0));
+		assertEquals(Players.PLAYER_1, game.getPriority().get(1));
+	}
+	
+	void assertPlayer1HasPriority() {
+		final List<Players> priority = game.getPriority();
+		assertEquals(2, priority.size());
+		assertEquals(Players.PLAYER_1, priority.get(0));
+	}
+	
+	void assertPlayer2HasPriority() {
+		final List<Players> priority = game.getPriority();
+		assertEquals(2, priority.size());
+		assertEquals(Players.PLAYER_2, priority.get(0));
 	}
 }

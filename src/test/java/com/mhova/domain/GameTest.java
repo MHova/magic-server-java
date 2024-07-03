@@ -144,53 +144,6 @@ class GameTest {
 		assertEquals(Optional.empty(), retVal);
 	}
 	
-	@Test
-	void resolveEmptyStack() {
-		Optional<Card> retVal = game.resolveStack();
-		List<Players> priority = game.getPriority();
-		assertEquals(Optional.empty(), retVal);
-		assertEquals(Players.PLAYER_1, priority.get(0));
-		assertEquals(Players.PLAYER_2, priority.get(1));
-	}
-	
-	@Test
-	void resolveNonEmptyStack() {
-		Card card = new Card("Dark Ritual");
-		board.stack.push(card);
-		Optional<Card> retVal = game.resolveStack();
-		assertEquals(Optional.of(card), retVal);
-		assertEquals(Players.PLAYER_1, game.getPriority().get(0));
-		assertEquals(Players.PLAYER_2, game.getPriority().get(1));
-	}
-	
-	@Test
-	void resolveNonEmptyStackOnPlayer2sTurn() {
-		game.advanceStep(); // UPKEEP
-		game.advanceStep(); // DRAW
-		game.advanceStep(); // MAIN 1
-		game.advanceStep(); // BEGINNING OF COMBAT
-		game.advanceStep(); // ATTACKERS
-		game.advanceStep(); // BLOCKERS
-		game.advanceStep(); // FIRST STRIKE DAMAGE
-		game.advanceStep(); // REGULAR DAMAGE
-		game.advanceStep(); // END OF COMBAT
-		game.advanceStep(); // MAIN 2
-		game.advanceStep(); // END
-		game.advanceStep(); // CLEANUP
-		game.advanceStep(); // PLAYER 2 UNTAP
-		game.advanceStep(); // PLAYER 2 UPKEEP
-		
-		game.passPriority();
-		assertEquals(Players.PLAYER_1, game.getPriority().get(0));
-		
-		Card card = new Card("Dark Ritual");
-		board.stack.push(card);
-		Optional<Card> retVal = game.resolveStack();
-		assertEquals(Optional.of(card), retVal);
-		assertEquals(Players.PLAYER_2, game.getPriority().get(0));
-		assertEquals(Players.PLAYER_1, game.getPriority().get(1));
-	}
-	
 	void assertPlayer1HasPriority() {
 		final List<Players> priority = game.getPriority();
 		assertEquals(2, priority.size());

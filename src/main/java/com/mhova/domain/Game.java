@@ -39,21 +39,6 @@ public class Game {
 	}
 
 	/**
-	 * Resolve the topmost object on the stack
-	 * 
-	 * @return the card that was resolved or empty if the stack was empty
-	 */
-	public Optional<Card> resolveStack() {
-		if(board.stack.empty()) {
-			return Optional.empty();
-		}
-		else {
-			resetPriority();
-			return Optional.of(board.stack.pop());
-		}
-	}
-
-	/**
 	 * The current player with priority passes priority.
 	 * 
 	 * @return The next player to receive priority. Empty if all players have

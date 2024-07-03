@@ -1,7 +1,7 @@
 Java implementation of a Magic: the Gathering gameplay server.
 
 TODO:
-- Effects on stack
+- Move cards between zones
 - Battlefield
 - Graveyard
 - Exile
@@ -9,5 +9,5 @@ TODO:
 - Hand
 - Draw
 - Peek
-- Move cards between zones
 - Face up/face down
+- Chat

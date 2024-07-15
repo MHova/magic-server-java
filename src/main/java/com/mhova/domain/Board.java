@@ -31,7 +31,7 @@ public class Board {
 	}
 
 	public boolean moveCardToBottom(final UnorderedZone origin,
-			final Library destination, final String cardId) {
+			final PlayerLibrary destination, final String cardId) {
 		Optional<Card> maybeCard = Optional
 				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
 		maybeCard.ifPresent(card -> libraryToDeque(destination).addLast(card));
@@ -52,7 +52,7 @@ public class Board {
 		};
 	}
 
-	private Deque<Card> libraryToDeque(final Library library) {
+	private Deque<Card> libraryToDeque(final PlayerLibrary library) {
 		return switch (library) {
 		case LIBRARY_1 -> library1;
 		case LIBRARY_2 -> library2;

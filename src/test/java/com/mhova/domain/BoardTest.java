@@ -22,7 +22,7 @@ class BoardTest {
 		assertFalse(retVal);
 
 		retVal = classUnderTest.moveCardToBottom(UnorderedZone.BATTLEFIELD_1,
-				Library.LIBRARY_1, "whatever");
+				PlayerLibrary.LIBRARY_1, "whatever");
 		assertFalse(retVal);
 	}
 
@@ -47,7 +47,7 @@ class BoardTest {
 		final Card card = new Card(id);
 		classUnderTest.battlefield1.put(id, card);
 		boolean retVal = classUnderTest.moveCardToBottom(
-				UnorderedZone.BATTLEFIELD_1, Library.LIBRARY_1, id);
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, id);
 		assertTrue(retVal);
 		assertTrue(classUnderTest.battlefield1.isEmpty());
 		assertEquals(2, classUnderTest.library1.size());

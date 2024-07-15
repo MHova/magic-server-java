@@ -12,6 +12,10 @@ public class Library {
 	public Library(final List<Card> cards) {
 		deque.addAll(cards);
 	}
+	
+	public void putCardOnTop(final Card card) {
+		putCardXFromTop(1, card);
+	}
 
 	public void putCardXFromTop(final int x, final Card card) {
 		final int limit = x <= deque.size() ? x : deque.size() + 1;

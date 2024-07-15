@@ -187,4 +187,25 @@ class LibraryTest {
 		assertEquals(1, result.size());
 		assertEquals(one, result.get(0));
 	}
+	
+	@Test
+	void putCardOnTop() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+
+		final List<Card> cards = new LinkedList<>();
+		cards.add(two);
+		cards.add(three);
+		cards.add(four);
+		classUnderTest = new Library(cards);
+		classUnderTest.putCardOnTop(one);
+		final List<Card> result = classUnderTest.asList();
+		assertEquals(4, result.size());
+		assertEquals(one, result.get(0));
+		assertEquals(two, result.get(1));
+		assertEquals(three, result.get(2));
+		assertEquals(four, result.get(3));
+	}
 }

@@ -28,6 +28,10 @@ public class Library {
 		deque.addFirst(card);
 		temp.stream().forEachOrdered(c -> deque.addFirst(c));
 	}
+	
+	public void putCardOnBottom(final Card card) {
+		deque.add(card);
+	}
 
 	public List<Card> asList() {
 		final List<Card> retVal = new ArrayList<>();

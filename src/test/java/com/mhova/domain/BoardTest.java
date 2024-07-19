@@ -3,16 +3,26 @@ package com.mhova.domain;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
+
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 class BoardTest {
 	private Board classUnderTest;
+	private Library library1;
+	private Library library2;
 
 	@BeforeEach
 	void setup() {
-		classUnderTest = new Board();
+		library1 = mock();
+		library2 = mock();
+		classUnderTest = new Board(library1, Optional.of(library2));
 	}
 
 	@Test
@@ -40,9 +50,6 @@ class BoardTest {
 
 	@Test
 	void moveCardToBottom() {
-		final Card existingCard = new Card("456");
-		classUnderTest.library1.add(existingCard);
-
 		final String id = "123";
 		final Card card = new Card(id);
 		classUnderTest.battlefield1.put(id, card);
@@ -50,8 +57,14 @@ class BoardTest {
 				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, id);
 		assertTrue(retVal);
 		assertTrue(classUnderTest.battlefield1.isEmpty());
-		assertEquals(2, classUnderTest.library1.size());
-		assertEquals(existingCard, classUnderTest.library1.pop());
-		assertEquals(card, classUnderTest.library1.pop());
+		verify(library1).putCardOnBottom(card);
+	}
+
+	@Test
+	void tryToMoveNonExistentCardToBottom() {
+		boolean retVal = classUnderTest.moveCardToBottom(
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, "nope");
+		assertFalse(retVal);
+		verify(library1, never()).putCardOnBottom(any());
 	}
 }

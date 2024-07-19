@@ -1,13 +1,11 @@
 package com.mhova.domain;
 
-import java.util.Deque;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
 import java.util.Optional;
 
 public class Board {
-	public final Deque<Card> library1 = new LinkedList<>();
-	public final Deque<Card> library2 = new LinkedList<>();
+	public final Library library1;
+	public final Library library2;
 
 	public final LinkedHashMap<String, Card> graveyard1 = new LinkedHashMap<>();
 	public final LinkedHashMap<String, Card> graveyard2 = new LinkedHashMap<>();
@@ -20,6 +18,13 @@ public class Board {
 
 	public final LinkedHashMap<String, Card> hand1 = new LinkedHashMap<>();
 	public final LinkedHashMap<String, Card> hand2 = new LinkedHashMap<>();
+
+	public Board(final Library library1,
+			final Optional<Library> maybeLibrary2) {
+		this.library1 = library1;
+		// TODO: fix this
+		this.library2 = maybeLibrary2.orElse(null);
+	}
 
 	public boolean moveCard(final UnorderedZone origin,
 			final UnorderedZone destination, final String cardId) {
@@ -34,7 +39,8 @@ public class Board {
 			final PlayerLibrary destination, final String cardId) {
 		Optional<Card> maybeCard = Optional
 				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
-		maybeCard.ifPresent(card -> libraryToDeque(destination).addLast(card));
+		maybeCard.ifPresent(card -> playerLibraryToLibrary(destination)
+				.putCardOnBottom(card));
 		return maybeCard.isPresent();
 	}
 
@@ -52,7 +58,7 @@ public class Board {
 		};
 	}
 
-	private Deque<Card> libraryToDeque(final PlayerLibrary library) {
+	private Library playerLibraryToLibrary(final PlayerLibrary library) {
 		return switch (library) {
 		case LIBRARY_1 -> library1;
 		case LIBRARY_2 -> library2;

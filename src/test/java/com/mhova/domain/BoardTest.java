@@ -8,7 +8,9 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -108,5 +110,45 @@ class BoardTest {
 				"nope");
 		assertFalse(retVal);
 		verify(library1, never()).putCardXFromTop(anyInt(), any());
+	}
+
+	@Test
+	void millXPlayer1() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library1.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.graveyard1.put(one.id(), one);
+
+		classUnderTest.millX(Players.PLAYER_1, 3);
+
+		final Card[] graveyard = classUnderTest.graveyard1.values()
+				.toArray(new Card[0]);
+		assertEquals(4, graveyard.length);
+		assertEquals(one, graveyard[0]);
+		assertEquals(two, graveyard[1]);
+		assertEquals(three, graveyard[2]);
+		assertEquals(four, graveyard[3]);
+	}
+	
+	@Test
+	void millXPlayer2() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library2.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.graveyard2.put(one.id(), one);
+
+		classUnderTest.millX(Players.PLAYER_2, 3);
+
+		final Card[] graveyard = classUnderTest.graveyard2.values()
+				.toArray(new Card[0]);
+		assertEquals(4, graveyard.length);
+		assertEquals(one, graveyard[0]);
+		assertEquals(two, graveyard[1]);
+		assertEquals(three, graveyard[2]);
+		assertEquals(four, graveyard[3]);
 	}
 }

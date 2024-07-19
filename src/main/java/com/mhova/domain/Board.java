@@ -1,7 +1,10 @@
 package com.mhova.domain;
 
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Optional;
+
+import org.apache.commons.lang3.tuple.Pair;
 
 public class Board {
 	public final Library library1;
@@ -58,6 +61,17 @@ public class Board {
 		return maybeCard.isPresent();
 	}
 
+	public void millX(final Players players, final int x) {
+		final Pair<Library, LinkedHashMap<String, Card>> libraryAndGraveyard = playersToLibraryAndGraveyard(
+				players);
+		final List<Card> cardsToMill = libraryAndGraveyard.getLeft()
+				.removeTopX(x);
+
+		for (final Card c : cardsToMill) {
+			libraryAndGraveyard.getRight().put(c.id(), c);
+		}
+	}
+
 	private Optional<Card> getCardFromUnorderedZone(final UnorderedZone origin,
 			final String cardId) {
 		return Optional.ofNullable(unorderedZoneToMap(origin).remove(cardId));
@@ -81,6 +95,14 @@ public class Board {
 		return switch (library) {
 		case LIBRARY_1 -> library1;
 		case LIBRARY_2 -> library2;
+		};
+	}
+
+	private Pair<Library, LinkedHashMap<String, Card>> playersToLibraryAndGraveyard(
+			final Players players) {
+		return switch (players) {
+		case PLAYER_1 -> Pair.of(library1, graveyard1);
+		case PLAYER_2 -> Pair.of(library2, graveyard2);
 		};
 	}
 }

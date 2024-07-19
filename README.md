@@ -2,6 +2,9 @@ Java implementation of a Magic: the Gathering gameplay server.
 
 TODO:
 - Move cards between zones
+- Permanent counters
+- Player counters
+- Tap
 - Battlefield
 - Graveyard
 - Exile

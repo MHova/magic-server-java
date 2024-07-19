@@ -131,7 +131,7 @@ class BoardTest {
 		assertEquals(three, graveyard[2]);
 		assertEquals(four, graveyard[3]);
 	}
-	
+
 	@Test
 	void millXPlayer2() {
 		final Card one = new Card("1");
@@ -150,5 +150,45 @@ class BoardTest {
 		assertEquals(two, graveyard[1]);
 		assertEquals(three, graveyard[2]);
 		assertEquals(four, graveyard[3]);
+	}
+
+	@Test
+	void exileTopXPlayer1() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library1.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.exile1.put(one.id(), one);
+
+		classUnderTest.exileTopX(Players.PLAYER_1, 3);
+
+		final Card[] exile = classUnderTest.exile1.values()
+				.toArray(new Card[0]);
+		assertEquals(4, exile.length);
+		assertEquals(one, exile[0]);
+		assertEquals(two, exile[1]);
+		assertEquals(three, exile[2]);
+		assertEquals(four, exile[3]);
+	}
+
+	@Test
+	void exileTopXPlayer2() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library2.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.exile2.put(one.id(), one);
+
+		classUnderTest.exileTopX(Players.PLAYER_2, 3);
+
+		final Card[] exile = classUnderTest.exile2.values()
+				.toArray(new Card[0]);
+		assertEquals(4, exile.length);
+		assertEquals(one, exile[0]);
+		assertEquals(two, exile[1]);
+		assertEquals(three, exile[2]);
+		assertEquals(four, exile[3]);
 	}
 }

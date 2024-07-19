@@ -12,7 +12,7 @@ public class Library {
 	public Library(final List<Card> cards) {
 		deque.addAll(cards);
 	}
-	
+
 	public void putCardOnTop(final Card card) {
 		putCardXFromTop(1, card);
 	}
@@ -28,9 +28,24 @@ public class Library {
 		deque.addFirst(card);
 		temp.stream().forEachOrdered(c -> deque.addFirst(c));
 	}
-	
+
 	public void putCardOnBottom(final Card card) {
 		deque.add(card);
+	}
+
+	public List<Card> removeTopX(final int x) {
+		final List<Card> retVal = new LinkedList<>();
+		final int limit = Math.min(x, deque.size());
+
+		for (int i = 0; i < limit; i++) {
+			retVal.add(deque.remove());
+		}
+
+		return retVal;
+	}
+
+	public int size() {
+		return deque.size();
 	}
 
 	public List<Card> asList() {

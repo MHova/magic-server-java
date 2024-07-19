@@ -13,4 +13,5 @@ TODO:
 - Draw
 - Peek
 - Face up/face down
+- Manifest face down from Library
 - Chat

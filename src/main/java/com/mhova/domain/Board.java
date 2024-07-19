@@ -44,6 +44,24 @@ public class Board {
 		return maybeCard.isPresent();
 	}
 
+	public boolean moveCardToTop(final UnorderedZone origin,
+			final PlayerLibrary destination, final String cardId) {
+		Optional<Card> maybeCard = Optional
+				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		maybeCard.ifPresent(
+				card -> playerLibraryToLibrary(destination).putCardOnTop(card));
+		return maybeCard.isPresent();
+	}
+
+	public boolean moveCardXFromTop(final UnorderedZone origin,
+			final PlayerLibrary destination, final int x, final String cardId) {
+		Optional<Card> maybeCard = Optional
+				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		maybeCard.ifPresent(card -> playerLibraryToLibrary(destination)
+				.putCardXFromTop(x, card));
+		return maybeCard.isPresent();
+	}
+
 	private LinkedHashMap<String, Card> unorderedZoneToMap(
 			final UnorderedZone zone) {
 		return switch (zone) {

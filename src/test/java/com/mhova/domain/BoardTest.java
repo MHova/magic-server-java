@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
@@ -66,5 +67,46 @@ class BoardTest {
 				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, "nope");
 		assertFalse(retVal);
 		verify(library1, never()).putCardOnBottom(any());
+	}
+
+	@Test
+	void moveCardToTop() {
+		final String id = "123";
+		final Card card = new Card(id);
+		classUnderTest.battlefield1.put(id, card);
+		boolean retVal = classUnderTest.moveCardToTop(
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, id);
+		assertTrue(retVal);
+		assertTrue(classUnderTest.battlefield1.isEmpty());
+		verify(library1).putCardOnTop(card);
+	}
+
+	@Test
+	void tryToMoveNonExistentCardToTop() {
+		boolean retVal = classUnderTest.moveCardToTop(
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, "nope");
+		assertFalse(retVal);
+		verify(library1, never()).putCardOnTop(any());
+	}
+
+	@Test
+	void moveCardXFromTop() {
+		final String id = "123";
+		final Card card = new Card(id);
+		classUnderTest.battlefield1.put(id, card);
+		boolean retVal = classUnderTest.moveCardXFromTop(
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, 2, id);
+		assertTrue(retVal);
+		assertTrue(classUnderTest.battlefield1.isEmpty());
+		verify(library1).putCardXFromTop(2, card);
+	}
+
+	@Test
+	void tryToMoveNonExistentCardXFromTop() {
+		boolean retVal = classUnderTest.moveCardXFromTop(
+				UnorderedZone.BATTLEFIELD_1, PlayerLibrary.LIBRARY_1, 2,
+				"nope");
+		assertFalse(retVal);
+		verify(library1, never()).putCardXFromTop(anyInt(), any());
 	}
 }

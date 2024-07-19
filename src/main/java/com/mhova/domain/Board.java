@@ -82,6 +82,16 @@ public class Board {
 		}
 	}
 
+	public void drawX(final Players players, final int x) {
+		final Pair<Library, LinkedHashMap<String, Card>> libraryAndHand = playersToLibraryAndHand(
+				players);
+		final List<Card> cardsToDraw = libraryAndHand.getLeft().removeTopX(x);
+
+		for (final Card c : cardsToDraw) {
+			libraryAndHand.getRight().put(c.id(), c);
+		}
+	}
+
 	private Optional<Card> getCardFromUnorderedZone(final UnorderedZone origin,
 			final String cardId) {
 		return Optional.ofNullable(unorderedZoneToMap(origin).remove(cardId));
@@ -121,6 +131,14 @@ public class Board {
 		return switch (players) {
 		case PLAYER_1 -> Pair.of(library1, exile1);
 		case PLAYER_2 -> Pair.of(library2, exile2);
+		};
+	}
+
+	private Pair<Library, LinkedHashMap<String, Card>> playersToLibraryAndHand(
+			final Players players) {
+		return switch (players) {
+		case PLAYER_1 -> Pair.of(library1, hand1);
+		case PLAYER_2 -> Pair.of(library2, hand2);
 		};
 	}
 }

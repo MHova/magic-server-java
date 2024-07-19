@@ -191,4 +191,42 @@ class BoardTest {
 		assertEquals(three, exile[2]);
 		assertEquals(four, exile[3]);
 	}
+
+	@Test
+	void drawXPlayer1() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library1.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.hand1.put(one.id(), one);
+
+		classUnderTest.drawX(Players.PLAYER_1, 3);
+
+		final Card[] hand = classUnderTest.hand1.values().toArray(new Card[0]);
+		assertEquals(4, hand.length);
+		assertEquals(one, hand[0]);
+		assertEquals(two, hand[1]);
+		assertEquals(three, hand[2]);
+		assertEquals(four, hand[3]);
+	}
+
+	@Test
+	void drawXPlayer2() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+		when(library2.removeTopX(3)).thenReturn(List.of(two, three, four));
+		classUnderTest.hand2.put(one.id(), one);
+
+		classUnderTest.drawX(Players.PLAYER_2, 3);
+
+		final Card[] hand = classUnderTest.hand2.values().toArray(new Card[0]);
+		assertEquals(4, hand.length);
+		assertEquals(one, hand[0]);
+		assertEquals(two, hand[1]);
+		assertEquals(three, hand[2]);
+		assertEquals(four, hand[3]);
+	}
 }

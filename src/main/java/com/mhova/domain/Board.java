@@ -28,8 +28,7 @@ public class Board {
 
 	public boolean moveCard(final UnorderedZone origin,
 			final UnorderedZone destination, final String cardId) {
-		Optional<Card> maybeCard = Optional
-				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
 		maybeCard.ifPresent(
 				card -> unorderedZoneToMap(destination).put(cardId, card));
 		return maybeCard.isPresent();
@@ -37,8 +36,7 @@ public class Board {
 
 	public boolean moveCardToBottom(final UnorderedZone origin,
 			final PlayerLibrary destination, final String cardId) {
-		Optional<Card> maybeCard = Optional
-				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
 		maybeCard.ifPresent(card -> playerLibraryToLibrary(destination)
 				.putCardOnBottom(card));
 		return maybeCard.isPresent();
@@ -46,8 +44,7 @@ public class Board {
 
 	public boolean moveCardToTop(final UnorderedZone origin,
 			final PlayerLibrary destination, final String cardId) {
-		Optional<Card> maybeCard = Optional
-				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
 		maybeCard.ifPresent(
 				card -> playerLibraryToLibrary(destination).putCardOnTop(card));
 		return maybeCard.isPresent();
@@ -55,11 +52,15 @@ public class Board {
 
 	public boolean moveCardXFromTop(final UnorderedZone origin,
 			final PlayerLibrary destination, final int x, final String cardId) {
-		Optional<Card> maybeCard = Optional
-				.ofNullable(unorderedZoneToMap(origin).remove(cardId));
+		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
 		maybeCard.ifPresent(card -> playerLibraryToLibrary(destination)
 				.putCardXFromTop(x, card));
 		return maybeCard.isPresent();
+	}
+
+	private Optional<Card> getCardFromUnorderedZone(final UnorderedZone origin,
+			final String cardId) {
+		return Optional.ofNullable(unorderedZoneToMap(origin).remove(cardId));
 	}
 
 	private LinkedHashMap<String, Card> unorderedZoneToMap(

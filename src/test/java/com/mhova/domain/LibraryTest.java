@@ -240,7 +240,7 @@ class LibraryTest {
 		assertEquals(three, retVal.get(2));
 		assertEquals(1, classUnderTest.size());
 	}
-	
+
 	@Test
 	void removeTooManyFromTopX() {
 		final Card one = new Card("1");
@@ -263,5 +263,51 @@ class LibraryTest {
 		assertEquals(three, retVal.get(2));
 		assertEquals(four, retVal.get(3));
 		assertEquals(0, classUnderTest.size());
+	}
+
+	@Test
+	void lookAtTopX() {
+		final Card one = new Card("1");
+		final Card two = new Card("2");
+		final Card three = new Card("3");
+		final Card four = new Card("4");
+
+		final List<Card> cards = new LinkedList<>();
+		cards.add(one);
+		cards.add(two);
+		cards.add(three);
+		cards.add(four);
+		classUnderTest = new Library(cards);
+		assertEquals(4, classUnderTest.size());
+
+		List<Card> retVal = classUnderTest.lookAtTopX(0);
+		assertTrue(retVal.isEmpty());
+		assertEquals(4, classUnderTest.size());
+
+		retVal = classUnderTest.lookAtTopX(-1);
+		assertTrue(retVal.isEmpty());
+		assertEquals(4, classUnderTest.size());
+
+		retVal = classUnderTest.lookAtTopX(2);
+		assertEquals(2, retVal.size());
+		assertEquals(one, retVal.get(0));
+		assertEquals(two, retVal.get(1));
+		assertEquals(4, classUnderTest.size());
+
+		retVal = classUnderTest.lookAtTopX(4);
+		assertEquals(4, retVal.size());
+		assertEquals(one, retVal.get(0));
+		assertEquals(two, retVal.get(1));
+		assertEquals(three, retVal.get(2));
+		assertEquals(four, retVal.get(3));
+		assertEquals(4, classUnderTest.size());
+
+		retVal = classUnderTest.lookAtTopX(5);
+		assertEquals(4, retVal.size());
+		assertEquals(one, retVal.get(0));
+		assertEquals(two, retVal.get(1));
+		assertEquals(three, retVal.get(2));
+		assertEquals(four, retVal.get(3));
+		assertEquals(4, classUnderTest.size());
 	}
 }

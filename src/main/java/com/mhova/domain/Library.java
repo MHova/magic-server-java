@@ -44,6 +44,12 @@ public class Library {
 		return retVal;
 	}
 
+	public List<Card> lookAtTopX(final int x) {
+		int limit = Math.min(x, deque.size());
+		limit = Math.max(limit, 0);
+		return asList().subList(0, limit);
+	}
+
 	public int size() {
 		return deque.size();
 	}

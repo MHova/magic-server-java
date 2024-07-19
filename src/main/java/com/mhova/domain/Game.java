@@ -26,7 +26,8 @@ public class Game {
 	// Number of players who have passed priority in succession
 	private int numPlayersPassedPriority = 0;
 
-	public Game(Player player1, Optional<Player> player2, Board board) {
+	public Game(final Player player1, final Optional<Player> player2,
+			final Board board) {
 		super();
 		this.player1 = player1;
 		this.player2 = player2;

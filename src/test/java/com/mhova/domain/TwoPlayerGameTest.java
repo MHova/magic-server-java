@@ -1,7 +1,6 @@
 package com.mhova.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Optional;
@@ -10,18 +9,12 @@ import org.javatuples.Pair;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class GameTest {
-	private Game classUnderTest;
-	private Board board;
-	private Player alice;
-	private Player bob;
+class TwoPlayerGameTest {
+	private TwoPlayerGame classUnderTest;
 
 	@BeforeEach
 	void setup() {
-		board = mock();
-		alice = new Player("Alice");
-		bob = new Player("Bob");
-		classUnderTest = new Game(alice, Optional.of(bob), board);
+		classUnderTest = new TwoPlayerGame();
 	}
 
 	@Test
@@ -35,18 +28,6 @@ class GameTest {
 		assertEquals(2, priority.size());
 		assertEquals(Players.PLAYER_1, priority.get(0));
 		assertEquals(Players.PLAYER_2, priority.get(1));
-	}
-
-	@Test
-	void newGameWithOnePlayer() {
-		classUnderTest = new Game(alice, Optional.empty(), board);
-		final List<Players> active = classUnderTest.getActive();
-		assertEquals(1, active.size());
-		assertEquals(Players.PLAYER_1, active.get(0));
-
-		final List<Players> priority = classUnderTest.getPriority();
-		assertEquals(1, priority.size());
-		assertEquals(Players.PLAYER_1, priority.get(0));
 	}
 
 	@Test

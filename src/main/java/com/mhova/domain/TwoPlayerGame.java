@@ -8,14 +8,10 @@ import java.util.Optional;
 
 import org.javatuples.Pair;
 
-public class Game {
+public class TwoPlayerGame {
 	private final List<Step> steps = Arrays.asList(Step.values());
 
-	private final Player player1;
-	private final Optional<Player> player2;
-	private final Board board;
-
-	private final int numPlayers;
+	private final int numPlayers = 2;
 
 	// Tracks whose turn it is
 	private final List<Players> active;
@@ -26,16 +22,9 @@ public class Game {
 	// Number of players who have passed priority in succession
 	private int numPlayersPassedPriority = 0;
 
-	public Game(final Player player1, final Optional<Player> player2,
-			final Board board) {
+	public TwoPlayerGame() {
 		super();
-		this.player1 = player1;
-		this.player2 = player2;
-		this.board = board;
-		this.numPlayers = player2.isEmpty() ? 1 : 2;
-
-		active = player2.isPresent() ? Arrays.asList(Players.values())
-				: Arrays.asList(Players.PLAYER_1);
+		active = Arrays.asList(Players.values());
 		resetPriority();
 	}
 

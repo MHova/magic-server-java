@@ -1,17 +1,12 @@
 Java implementation of a Magic: the Gathering gameplay server.
 
 TODO:
-- Move cards between zones
 - Permanent counters
 - Player counters
 - Tap
-- Battlefield
-- Graveyard
-- Exile
-- Library
+- Search library
+- Move specific card out of library
 - Hand
-- Draw
-- Peek
 - Face up/face down
 - Manifest face down from Library
 - Chat

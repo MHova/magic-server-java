@@ -26,7 +26,7 @@ class PlayerTest {
 		final Card three = new Card("3");
 		final Card four = new Card("4");
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
-		classUnderTest.getGraveyard().put(one.id(), one);
+		classUnderTest.getGraveyard().put(one.cardId(), one);
 
 		classUnderTest.millX(3);
 
@@ -46,7 +46,7 @@ class PlayerTest {
 		final Card three = new Card("3");
 		final Card four = new Card("4");
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
-		classUnderTest.getExile().put(one.id(), one);
+		classUnderTest.getExile().put(one.cardId(), one);
 
 		classUnderTest.exileTopX(3);
 
@@ -65,7 +65,7 @@ class PlayerTest {
 		final Card three = new Card("3");
 		final Card four = new Card("4");
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
-		classUnderTest.getHand().put(one.id(), one);
+		classUnderTest.getHand().put(one.cardId(), one);
 
 		classUnderTest.drawX(3);
 

@@ -70,7 +70,7 @@ public class Player {
 	private void putCards(final List<Card> cards,
 			final LinkedHashMap<String, Card> destination) {
 		for (final Card c : cards) {
-			destination.put(c.id(), c);
+			destination.put(c.cardId(), c);
 		}
 	}
 

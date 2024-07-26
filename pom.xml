@@ -92,7 +92,7 @@
 								<transformer
 									implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
 									<mainClass>
-										com.mhova.HelloWorldApplication</mainClass>
+										com.mhova.MagicServerApplication</mainClass>
 								</transformer>
 							</transformers>
 						</configuration>

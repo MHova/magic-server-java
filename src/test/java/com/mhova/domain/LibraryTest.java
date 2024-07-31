@@ -23,7 +23,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(1, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -44,7 +44,7 @@ class LibraryTest {
 		cards.add(one);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(2, two);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -65,7 +65,7 @@ class LibraryTest {
 		cards.add(one);
 		cards.add(two);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(3, three);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -86,7 +86,7 @@ class LibraryTest {
 		cards.add(one);
 		cards.add(two);
 		cards.add(three);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(4, four);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -107,7 +107,7 @@ class LibraryTest {
 		cards.add(one);
 		cards.add(two);
 		cards.add(three);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(5, four);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -128,7 +128,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(-1, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -149,7 +149,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardXFromTop(-1, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -162,7 +162,7 @@ class LibraryTest {
 	@Test
 	void addNegativeXToEmptyLibrary() {
 		final Card one = new Card("1");
-		classUnderTest = new Library(Collections.emptyList());
+		classUnderTest = new Library("blah", Collections.emptyList());
 		classUnderTest.putCardXFromTop(-1, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(1, result.size());
@@ -172,7 +172,7 @@ class LibraryTest {
 	@Test
 	void addZeroToEmptyLibrary() {
 		final Card one = new Card("1");
-		classUnderTest = new Library(Collections.emptyList());
+		classUnderTest = new Library("blah", Collections.emptyList());
 		classUnderTest.putCardXFromTop(0, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(1, result.size());
@@ -182,7 +182,7 @@ class LibraryTest {
 	@Test
 	void addToTopToEmptyLibrary() {
 		final Card one = new Card("1");
-		classUnderTest = new Library(Collections.emptyList());
+		classUnderTest = new Library("blah", Collections.emptyList());
 		classUnderTest.putCardXFromTop(1, one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(1, result.size());
@@ -200,7 +200,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		classUnderTest.putCardOnTop(one);
 		final List<Card> result = classUnderTest.asList();
 		assertEquals(4, result.size());
@@ -222,7 +222,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		assertEquals(4, classUnderTest.size());
 
 		List<Card> retVal = classUnderTest.removeTopX(0);
@@ -253,7 +253,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		assertEquals(4, classUnderTest.size());
 
 		List<Card> retVal = classUnderTest.removeTopX(5);
@@ -277,7 +277,7 @@ class LibraryTest {
 		cards.add(two);
 		cards.add(three);
 		cards.add(four);
-		classUnderTest = new Library(cards);
+		classUnderTest = new Library("blah", cards);
 		assertEquals(4, classUnderTest.size());
 
 		List<Card> retVal = classUnderTest.lookAtTopX(0);

@@ -14,10 +14,10 @@ import jakarta.ws.rs.core.MediaType;
 
 @Path("/games")
 @Produces(MediaType.APPLICATION_JSON)
-public class GameResource {
+public class GamesResource {
 	private final MongoClient mongoClient;
 
-	public GameResource(final MongoClient mongoClient) {
+	public GamesResource(final MongoClient mongoClient) {
 		this.mongoClient = mongoClient;
 	}
 
@@ -25,7 +25,8 @@ public class GameResource {
 	@Timed
 	public List<Card> getAllCards() {
 		final List<Card> retVal = new ArrayList<>();
-		mongoClient.getDatabase("test").getCollection("cards", Card.class).find().into(retVal);
+		mongoClient.getDatabase("test").getCollection("cards", Card.class)
+				.find().into(retVal);
 		return retVal;
 	}
 }

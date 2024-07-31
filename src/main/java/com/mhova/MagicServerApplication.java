@@ -1,8 +1,9 @@
 package com.mhova;
 
 import com.mhova.health.TemplateHealthCheck;
-import com.mhova.resources.GameResource;
+import com.mhova.resources.GamesResource;
 import com.mhova.resources.HelloWorldResource;
+import com.mhova.resources.LibrariesResource;
 import com.mongodb.client.MongoClient;
 
 import io.dropwizard.core.Application;
@@ -36,10 +37,11 @@ public class MagicServerApplication
 		final HelloWorldResource helloWorldResource = new HelloWorldResource(
 				configuration.getTemplate(), configuration.getDefaultName());
 		environment.jersey().register(helloWorldResource);
-		
+
 		final MongoClient mongoClient = configuration
 				.getMongoDBConnectionFactory().build(environment);
-		final GameResource gameResource = new GameResource(mongoClient);
-		environment.jersey().register(gameResource);
+
+		environment.jersey().register(new GamesResource(mongoClient));
+		environment.jersey().register(new LibrariesResource(mongoClient));
 	}
 }

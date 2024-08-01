@@ -28,10 +28,17 @@ import jakarta.ws.rs.core.Response;
 @Path("/libraries")
 @Produces(MediaType.APPLICATION_JSON)
 public class LibrariesResource {
-	private final MongoClient mongoClient;
+	private final MongoDatabase db;
 
 	public LibrariesResource(final MongoClient mongoClient) {
-		this.mongoClient = mongoClient;
+		final PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder()
+				.conventions(List.of(Conventions.ANNOTATION_CONVENTION))
+				.register(ClassModel.builder(Library.class).build())
+				.automatic(true).build();
+		final CodecRegistry pojoCodecRegistry = fromRegistries(
+				getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
+		this.db = mongoClient.getDatabase("test")
+				.withCodecRegistry(pojoCodecRegistry);
 	}
 
 	@POST
@@ -42,15 +49,6 @@ public class LibrariesResource {
 		final Card card3 = new Card("one_3");
 		final Library library = new Library("one",
 				List.of(card1, card2, card3));
-
-		final PojoCodecProvider pojoCodecProvider = PojoCodecProvider.builder()
-				.conventions(List.of(Conventions.ANNOTATION_CONVENTION))
-				.register(ClassModel.builder(Library.class).build())
-				.automatic(true).build();
-		final CodecRegistry pojoCodecRegistry = fromRegistries(
-				getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
-		final MongoDatabase db = mongoClient.getDatabase("test")
-				.withCodecRegistry(pojoCodecRegistry);
 
 		db.getCollection("libraries", Library.class).insertOne(library);
 

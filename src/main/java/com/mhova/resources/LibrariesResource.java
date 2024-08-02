@@ -7,6 +7,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import org.bson.codecs.configuration.CodecRegistry;
 import org.bson.codecs.pojo.ClassModel;
@@ -16,11 +17,17 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.codahale.metrics.annotation.Timed;
 import com.mhova.domain.Card;
 import com.mhova.domain.Library;
+import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Filters;
 
+import jakarta.ws.rs.BadRequestException;
+import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
@@ -53,5 +60,22 @@ public class LibrariesResource {
 		db.getCollection("libraries", Library.class).insertOne(library);
 
 		return Response.created(new URI("/libraries/one")).build();
+	}
+
+	@GET
+	@Path("/{libraryId}")
+	@Timed
+	public Library getLibrary(
+			@PathParam("libraryId") Optional<String> maybeLibraryId) {
+		final String libraryId = maybeLibraryId.orElseThrow(
+				() -> new BadRequestException("library ID is required"));
+		FindIterable<Library> findIterable = db
+				.getCollection("libraries", Library.class)
+				.find(Filters.eq(libraryId));
+
+		final Optional<Library> maybeRetVal = Optional
+				.ofNullable(findIterable.first());
+		return maybeRetVal
+				.orElseThrow(() -> new NotFoundException("No such library"));
 	}
 }

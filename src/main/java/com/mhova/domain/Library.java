@@ -6,22 +6,28 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 public class Library {
 	private final String id;
 
-	private final Deque<Card> deck = new ArrayDeque<>();
+	private final Deque<Card> deck;
 
-	public Library(final String id, final List<Card> cards) {
+	@BsonCreator
+	public Library(@BsonId final String id,
+			@BsonProperty("deck") final List<Card> cards) {
 		this.id = id;
-		deck.addAll(cards);
+		this.deck = new ArrayDeque<>(cards);
 	}
 
 	public String getId() {
 		return id;
 	}
 
-	public Deque<Card> getDeck() {
-		return deck;
+	public List<Card> getDeck() {
+		return new ArrayList<>(deck);
 	}
 
 	public void putCardOnTop(final Card card) {
@@ -58,16 +64,10 @@ public class Library {
 	public List<Card> lookAtTopX(final int x) {
 		int limit = Math.min(x, deck.size());
 		limit = Math.max(limit, 0);
-		return asList().subList(0, limit);
+		return getDeck().subList(0, limit);
 	}
 
 	public int size() {
 		return deck.size();
-	}
-
-	public List<Card> asList() {
-		final List<Card> retVal = new ArrayList<>();
-		retVal.addAll(deck);
-		return retVal;
 	}
 }

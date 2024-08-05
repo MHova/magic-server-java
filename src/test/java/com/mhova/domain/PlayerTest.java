@@ -17,9 +17,9 @@ class PlayerTest {
 	@BeforeEach
 	void setup() {
 		library = mock();
-		classUnderTest = new Player("someId", "Alice", library,
+		classUnderTest = new Player("Alice", library, new LinkedHashMap<>(),
 				new LinkedHashMap<>(), new LinkedHashMap<>(),
-				new LinkedHashMap<>(), new LinkedHashMap<>());
+				new LinkedHashMap<>());
 	}
 
 	@Test

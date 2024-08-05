@@ -5,11 +5,9 @@ import java.util.List;
 import java.util.Objects;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Player {
-	private final String id;
 	private final String name;
 	private final Library library;
 	private final LinkedHashMap<String, Card> graveyard;
@@ -18,14 +16,12 @@ public class Player {
 	private final LinkedHashMap<String, Card> hand;
 
 	@BsonCreator
-	public Player(@BsonId final String id,
-			@BsonProperty("name") final String name,
+	public Player(@BsonProperty("name") final String name,
 			@BsonProperty("library") final Library library,
 			@BsonProperty("graveyard") final LinkedHashMap<String, Card> graveyard,
 			@BsonProperty("battlefield") final LinkedHashMap<String, Card> battlefield,
 			@BsonProperty("exile") final LinkedHashMap<String, Card> exile,
 			@BsonProperty("hand") final LinkedHashMap<String, Card> hand) {
-		this.id = id;
 		this.name = name;
 		this.library = library;
 		this.graveyard = graveyard;
@@ -49,14 +45,10 @@ public class Player {
 		putCards(cardsToDraw, hand);
 	}
 
-	public String getId() {
-		return id;
-	}
-
 	public String getName() {
 		return name;
 	}
-	
+
 	public Library getLibrary() {
 		return library;
 	}

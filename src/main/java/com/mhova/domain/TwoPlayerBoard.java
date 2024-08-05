@@ -3,13 +3,34 @@ package com.mhova.domain;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 public class TwoPlayerBoard {
+	private final String id;
 	private final Player player1;
 	private final Player player2;
 
-	public TwoPlayerBoard(final Player player1, final Player player2) {
+	@BsonCreator
+	public TwoPlayerBoard(@BsonId final String id,
+			@BsonProperty("player1") final Player player1,
+			@BsonProperty("player2") final Player player2) {
+		this.id = id;
 		this.player1 = player1;
 		this.player2 = player2;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	public Player getPlayer2() {
+		return player2;
 	}
 
 	public boolean moveCard(final UnorderedZone origin,

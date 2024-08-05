@@ -36,7 +36,7 @@ class TwoPlayerBoardTest {
 		when(player2.getBattlefield()).thenReturn(battlefield2);
 		when(player2.getHand()).thenReturn(hand2);
 		when(player1.getLibrary()).thenReturn(library1);
-		classUnderTest = new TwoPlayerBoard(player1, player2);
+		classUnderTest = new TwoPlayerBoard("blah", player1, player2);
 	}
 
 	@Test

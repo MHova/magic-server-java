@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,9 @@ class PlayerTest {
 	@BeforeEach
 	void setup() {
 		library = mock();
-		classUnderTest = new Player("Alice", library);
+		classUnderTest = new Player("someId", "Alice", library,
+				new LinkedHashMap<>(), new LinkedHashMap<>(),
+				new LinkedHashMap<>(), new LinkedHashMap<>());
 	}
 
 	@Test
@@ -50,7 +53,8 @@ class PlayerTest {
 
 		classUnderTest.exileTopX(3);
 
-		final Card[] exile = classUnderTest.getExile().values().toArray(new Card[0]);
+		final Card[] exile = classUnderTest.getExile().values()
+				.toArray(new Card[0]);
 		assertEquals(4, exile.length);
 		assertEquals(one, exile[0]);
 		assertEquals(two, exile[1]);
@@ -69,7 +73,8 @@ class PlayerTest {
 
 		classUnderTest.drawX(3);
 
-		final Card[] hand = classUnderTest.getHand().values().toArray(new Card[0]);
+		final Card[] hand = classUnderTest.getHand().values()
+				.toArray(new Card[0]);
 		assertEquals(4, hand.length);
 		assertEquals(one, hand[0]);
 		assertEquals(two, hand[1]);

@@ -23,24 +23,24 @@ public class TwoPlayerBoard {
 	public boolean moveCardToBottom(final UnorderedZone origin,
 			final Players destination, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardOnBottom(card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardOnBottom(card));
 		return maybeCard.isPresent();
 	}
 
 	public boolean moveCardToTop(final UnorderedZone origin,
 			final Players destination, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardOnTop(card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardOnTop(card));
 		return maybeCard.isPresent();
 	}
 
 	public boolean moveCardXFromTop(final UnorderedZone origin,
 			final Players destination, final int x, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardXFromTop(x, card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardXFromTop(x, card));
 		return maybeCard.isPresent();
 	}
 

@@ -7,23 +7,14 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.bson.codecs.pojo.annotations.BsonCreator;
-import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
 public class Library {
-	private final String id;
-
 	private final Deque<Card> deck;
 
 	@BsonCreator
-	public Library(@BsonId final String id,
-			@BsonProperty("deck") final List<Card> cards) {
-		this.id = id;
+	public Library(@BsonProperty("deck") final List<Card> cards) {
 		this.deck = new ArrayDeque<>(cards);
-	}
-
-	public String getId() {
-		return id;
 	}
 
 	public List<Card> getDeck() {

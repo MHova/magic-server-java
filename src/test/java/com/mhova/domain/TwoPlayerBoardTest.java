@@ -19,6 +19,7 @@ class TwoPlayerBoardTest {
 	private TwoPlayerBoard classUnderTest;
 	private Player player1;
 	private Player player2;
+	private Library library1;
 	private LinkedHashMap<String, Card> hand2;
 	private LinkedHashMap<String, Card> battlefield1;
 	private LinkedHashMap<String, Card> battlefield2;
@@ -27,12 +28,14 @@ class TwoPlayerBoardTest {
 	void setup() {
 		player1 = mock();
 		player2 = mock();
+		library1 = mock();
 		battlefield1 = new LinkedHashMap<>();
 		hand2 = new LinkedHashMap<>();
 		battlefield2 = new LinkedHashMap<>();
 		when(player1.getBattlefield()).thenReturn(battlefield1);
 		when(player2.getBattlefield()).thenReturn(battlefield2);
 		when(player2.getHand()).thenReturn(hand2);
+		when(player1.getLibrary()).thenReturn(library1);
 		classUnderTest = new TwoPlayerBoard(player1, player2);
 	}
 
@@ -68,7 +71,7 @@ class TwoPlayerBoardTest {
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, id);
 		assertTrue(retVal);
 		assertTrue(battlefield1.isEmpty());
-		verify(player1).putCardOnBottom(card);
+		verify(library1).putCardOnBottom(card);
 	}
 
 	@Test
@@ -76,7 +79,7 @@ class TwoPlayerBoardTest {
 		boolean retVal = classUnderTest.moveCardToBottom(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, "nope");
 		assertFalse(retVal);
-		verify(player1, never()).putCardOnBottom(any());
+		verify(library1, never()).putCardOnBottom(any());
 	}
 
 	@Test
@@ -88,7 +91,7 @@ class TwoPlayerBoardTest {
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, id);
 		assertTrue(retVal);
 		assertTrue(battlefield1.isEmpty());
-		verify(player1).putCardOnTop(card);
+		verify(library1).putCardOnTop(card);
 	}
 
 	@Test
@@ -96,7 +99,7 @@ class TwoPlayerBoardTest {
 		boolean retVal = classUnderTest.moveCardToTop(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, "nope");
 		assertFalse(retVal);
-		verify(player1, never()).putCardOnTop(any());
+		verify(library1, never()).putCardOnTop(any());
 	}
 
 	@Test
@@ -108,7 +111,7 @@ class TwoPlayerBoardTest {
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, 2, id);
 		assertTrue(retVal);
 		assertTrue(battlefield1.isEmpty());
-		verify(player1).putCardXFromTop(2, card);
+		verify(library1).putCardXFromTop(2, card);
 	}
 
 	@Test
@@ -116,6 +119,6 @@ class TwoPlayerBoardTest {
 		boolean retVal = classUnderTest.moveCardXFromTop(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, 2, "nope");
 		assertFalse(retVal);
-		verify(player1, never()).putCardXFromTop(anyInt(), any());
+		verify(library1, never()).putCardXFromTop(anyInt(), any());
 	}
 }

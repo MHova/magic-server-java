@@ -4,20 +4,30 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 public class Player {
-	public final String name;
-
+	private final String name;
 	private final Library library;
+	private final LinkedHashMap<String, Card> graveyard;
+	private final LinkedHashMap<String, Card> battlefield;
+	private final LinkedHashMap<String, Card> exile;
+	private final LinkedHashMap<String, Card> hand;
 
-	private final LinkedHashMap<String, Card> graveyard = new LinkedHashMap<>();
-	private final LinkedHashMap<String, Card> battlefield = new LinkedHashMap<>();
-	private final LinkedHashMap<String, Card> exile = new LinkedHashMap<>();
-	private final LinkedHashMap<String, Card> hand = new LinkedHashMap<>();
-
-	public Player(final String name, final Library library) {
-		super();
+	@BsonCreator
+	public Player(@BsonProperty("name") final String name,
+			@BsonProperty("library") final Library library,
+			@BsonProperty("graveyard") final LinkedHashMap<String, Card> graveyard,
+			@BsonProperty("battlefield") final LinkedHashMap<String, Card> battlefield,
+			@BsonProperty("exile") final LinkedHashMap<String, Card> exile,
+			@BsonProperty("hand") final LinkedHashMap<String, Card> hand) {
 		this.name = name;
 		this.library = library;
+		this.graveyard = graveyard;
+		this.battlefield = battlefield;
+		this.exile = exile;
+		this.hand = hand;
 	}
 
 	public void millX(final int x) {
@@ -35,20 +45,12 @@ public class Player {
 		putCards(cardsToDraw, hand);
 	}
 
-	public void putCardOnTop(final Card card) {
-		library.putCardOnTop(card);
+	public String getName() {
+		return name;
 	}
 
-	public void putCardOnBottom(final Card card) {
-		library.putCardOnBottom(card);
-	}
-
-	public void putCardXFromTop(final int x, final Card card) {
-		library.putCardXFromTop(x, card);
-	}
-	
-	public List<Card> lookAtTopX(final int x) {
-		return library.lookAtTopX(x);
+	public Library getLibrary() {
+		return library;
 	}
 
 	public LinkedHashMap<String, Card> getGraveyard() {
@@ -70,7 +72,7 @@ public class Player {
 	private void putCards(final List<Card> cards,
 			final LinkedHashMap<String, Card> destination) {
 		for (final Card c : cards) {
-			destination.put(c.id(), c);
+			destination.put(c.cardId(), c);
 		}
 	}
 

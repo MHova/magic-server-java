@@ -6,11 +6,19 @@ import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Library {
-	private final Deque<Card> deque = new ArrayDeque<>();
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 
-	public Library(final List<Card> cards) {
-		deque.addAll(cards);
+public class Library {
+	private final Deque<Card> deck;
+
+	@BsonCreator
+	public Library(@BsonProperty("deck") final List<Card> cards) {
+		this.deck = new ArrayDeque<>(cards);
+	}
+
+	public List<Card> getDeck() {
+		return new ArrayList<>(deck);
 	}
 
 	public void putCardOnTop(final Card card) {
@@ -18,45 +26,39 @@ public class Library {
 	}
 
 	public void putCardXFromTop(final int x, final Card card) {
-		final int limit = x <= deque.size() ? x : deque.size() + 1;
+		final int limit = x <= deck.size() ? x : deck.size() + 1;
 		final LinkedList<Card> temp = new LinkedList<>();
 
 		for (int n = 1; n < limit; n++) {
-			temp.addFirst(deque.poll());
+			temp.addFirst(deck.poll());
 		}
 
-		deque.addFirst(card);
-		temp.stream().forEachOrdered(c -> deque.addFirst(c));
+		deck.addFirst(card);
+		temp.stream().forEachOrdered(c -> deck.addFirst(c));
 	}
 
 	public void putCardOnBottom(final Card card) {
-		deque.add(card);
+		deck.add(card);
 	}
 
 	public List<Card> removeTopX(final int x) {
 		final List<Card> retVal = new LinkedList<>();
-		final int limit = Math.min(x, deque.size());
+		final int limit = Math.min(x, deck.size());
 
 		for (int i = 0; i < limit; i++) {
-			retVal.add(deque.remove());
+			retVal.add(deck.remove());
 		}
 
 		return retVal;
 	}
 
 	public List<Card> lookAtTopX(final int x) {
-		int limit = Math.min(x, deque.size());
+		int limit = Math.min(x, deck.size());
 		limit = Math.max(limit, 0);
-		return asList().subList(0, limit);
+		return getDeck().subList(0, limit);
 	}
 
 	public int size() {
-		return deque.size();
-	}
-
-	public List<Card> asList() {
-		final List<Card> retVal = new ArrayList<>();
-		retVal.addAll(deque);
-		return retVal;
+		return deck.size();
 	}
 }

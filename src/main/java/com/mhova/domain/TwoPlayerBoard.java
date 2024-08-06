@@ -3,13 +3,26 @@ package com.mhova.domain;
 import java.util.LinkedHashMap;
 import java.util.Optional;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonProperty;
+
 public class TwoPlayerBoard {
 	private final Player player1;
 	private final Player player2;
 
-	public TwoPlayerBoard(final Player player1, final Player player2) {
+	@BsonCreator
+	public TwoPlayerBoard(@BsonProperty("player1") final Player player1,
+			@BsonProperty("player2") final Player player2) {
 		this.player1 = player1;
 		this.player2 = player2;
+	}
+
+	public Player getPlayer1() {
+		return player1;
+	}
+
+	public Player getPlayer2() {
+		return player2;
 	}
 
 	public boolean moveCard(final UnorderedZone origin,
@@ -23,24 +36,24 @@ public class TwoPlayerBoard {
 	public boolean moveCardToBottom(final UnorderedZone origin,
 			final Players destination, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardOnBottom(card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardOnBottom(card));
 		return maybeCard.isPresent();
 	}
 
 	public boolean moveCardToTop(final UnorderedZone origin,
 			final Players destination, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardOnTop(card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardOnTop(card));
 		return maybeCard.isPresent();
 	}
 
 	public boolean moveCardXFromTop(final UnorderedZone origin,
 			final Players destination, final int x, final String cardId) {
 		Optional<Card> maybeCard = getCardFromUnorderedZone(origin, cardId);
-		maybeCard.ifPresent(
-				card -> playersToPlayer(destination).putCardXFromTop(x, card));
+		maybeCard.ifPresent(card -> playersToPlayer(destination).getLibrary()
+				.putCardXFromTop(x, card));
 		return maybeCard.isPresent();
 	}
 

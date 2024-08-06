@@ -6,12 +6,18 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import org.bson.codecs.pojo.annotations.BsonCreator;
+import org.bson.codecs.pojo.annotations.BsonId;
+import org.bson.codecs.pojo.annotations.BsonProperty;
 import org.javatuples.Pair;
 
 public class TwoPlayerGame {
-	private final List<Step> steps = Arrays.asList(Step.values());
+	private static final int NUM_PLAYERS = 2;
 
-	private final int numPlayers = 2;
+	private final String id;
+
+	// Tracks the current step in the turn
+	private final List<Step> steps = Arrays.asList(Step.values());
 
 	// Tracks whose turn it is
 	private final List<Players> active;
@@ -22,10 +28,26 @@ public class TwoPlayerGame {
 	// Number of players who have passed priority in succession
 	private int numPlayersPassedPriority = 0;
 
-	public TwoPlayerGame() {
-		super();
+	private final TwoPlayerBoard board;
+
+	public TwoPlayerGame(final String id, final TwoPlayerBoard board) {
+		this.id = id;
+		this.board = board;
 		active = Arrays.asList(Players.values());
 		resetPriority();
+	}
+
+	@BsonCreator
+	public TwoPlayerGame(@BsonId final String id,
+			@BsonProperty("active") final List<Players> active,
+			@BsonProperty("priority") final List<Players> priority,
+			@BsonProperty("numPlayersPassedPriority") final int numPlayersPassedPriority,
+			@BsonProperty("board") final TwoPlayerBoard board) {
+		this.active = active;
+		this.priority = priority;
+		this.numPlayersPassedPriority = numPlayersPassedPriority;
+		this.id = id;
+		this.board = board;
 	}
 
 	/**
@@ -38,7 +60,7 @@ public class TwoPlayerGame {
 		Collections.rotate(priority, -1);
 		numPlayersPassedPriority++;
 
-		if(numPlayersPassedPriority >= numPlayers) {
+		if(numPlayersPassedPriority >= NUM_PLAYERS) {
 			numPlayersPassedPriority = 0;
 			return Optional.empty();
 		}
@@ -72,11 +94,27 @@ public class TwoPlayerGame {
 		priority = new ArrayList<>(active);
 	}
 
+	public String getId() {
+		return id;
+	}
+
+	public List<Step> getSteps() {
+		return steps;
+	}
+
 	public List<Players> getActive() {
 		return active;
 	}
 
 	public List<Players> getPriority() {
 		return priority;
+	}
+
+	public int getNumPlayersPassedPriority() {
+		return numPlayersPassedPriority;
+	}
+
+	public TwoPlayerBoard getBoard() {
+		return board;
 	}
 }

@@ -3,7 +3,6 @@ package com.mhova;
 import com.mhova.health.TemplateHealthCheck;
 import com.mhova.resources.GamesResource;
 import com.mhova.resources.HelloWorldResource;
-import com.mhova.resources.BoardsResource;
 import com.mongodb.client.MongoClient;
 
 import io.dropwizard.core.Application;
@@ -42,6 +41,5 @@ public class MagicServerApplication
 				.getMongoDBConnectionFactory().build(environment);
 
 		environment.jersey().register(new GamesResource(mongoClient));
-		environment.jersey().register(new BoardsResource(mongoClient));
 	}
 }

@@ -1,6 +1,7 @@
 package com.mhova.domain;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.util.List;
 import java.util.Optional;
@@ -11,10 +12,12 @@ import org.junit.jupiter.api.Test;
 
 class TwoPlayerGameTest {
 	private TwoPlayerGame classUnderTest;
+	private TwoPlayerBoard board;
 
 	@BeforeEach
 	void setup() {
-		classUnderTest = new TwoPlayerGame();
+		board = mock();
+		classUnderTest = new TwoPlayerGame("one", board);
 	}
 
 	@Test

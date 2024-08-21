@@ -18,6 +18,7 @@ import org.bson.codecs.pojo.PojoCodecProvider;
 import com.codahale.metrics.annotation.Timed;
 import com.mhova.api.APIError;
 import com.mhova.api.GameId;
+import com.mhova.auth.User;
 import com.mhova.domain.Card;
 import com.mhova.domain.Library;
 import com.mhova.domain.Player;
@@ -29,6 +30,7 @@ import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 
+import io.dropwizard.auth.Auth;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.ws.rs.BadRequestException;
@@ -64,8 +66,8 @@ public class GamesResource {
 
 	@POST
 	@Timed
-	public Response createNewGame(@NotNull @Valid final GameId gameId)
-			throws URISyntaxException {
+	public Response createNewGame(@Auth final User user,
+			@NotNull @Valid final GameId gameId) throws URISyntaxException {
 		// Player 1
 
 		final Card card1 = new Card("one_1");

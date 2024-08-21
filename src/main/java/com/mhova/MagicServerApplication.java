@@ -7,6 +7,7 @@ import com.mhova.auth.AuthorizerImpl;
 import com.mhova.auth.User;
 import com.mhova.health.DatabaseHealthCheck;
 import com.mhova.resources.GamesResource;
+import com.mhova.resources.UsersResource;
 import com.mongodb.client.MongoClient;
 
 import io.dropwizard.auth.AuthDynamicFeature;
@@ -54,6 +55,7 @@ public class MagicServerApplication
 				mongoClient);
 		environment.healthChecks().register("database", healthCheck);
 
+		environment.jersey().register(new UsersResource(mongoClient));
 		environment.jersey().register(new GamesResource(mongoClient));
 	}
 }

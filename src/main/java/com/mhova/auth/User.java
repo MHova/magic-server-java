@@ -7,6 +7,8 @@ import org.bson.codecs.pojo.annotations.BsonCreator;
 import org.bson.codecs.pojo.annotations.BsonId;
 import org.bson.codecs.pojo.annotations.BsonProperty;
 
+import com.mhova.domain.Deck;
+
 public class User implements Principal {
 	@BsonId
 	private final String name;
@@ -15,13 +17,17 @@ public class User implements Principal {
 
 	private final List<Role> roles;
 
+	private final List<Deck> decks;
+
 	@BsonCreator
 	public User(@BsonId final String name,
 			@BsonProperty("hashedPassword") final HashedPassword hashedPassword,
-			@BsonProperty("roles") final List<Role> roles) {
+			@BsonProperty("roles") final List<Role> roles,
+			@BsonProperty("decks") final List<Deck> decks) {
 		this.name = name;
 		this.hashedPassword = hashedPassword;
 		this.roles = roles;
+		this.decks = decks;
 	}
 
 	@Override
@@ -35,5 +41,9 @@ public class User implements Principal {
 
 	public List<Role> getRoles() {
 		return roles;
+	}
+	
+	public List<Deck> getDecks() {
+		return decks;
 	}
 }

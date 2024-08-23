@@ -6,6 +6,7 @@ import static org.mockito.Mockito.when;
 
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -24,10 +25,10 @@ class PlayerTest {
 
 	@Test
 	void millX() {
-		final Card one = new Card("1");
-		final Card two = new Card("2");
-		final Card three = new Card("3");
-		final Card four = new Card("4");
+		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card two = new Card("2", UUID.randomUUID(), null);
+		final Card three = new Card("3", UUID.randomUUID(), null);
+		final Card four = new Card("4", UUID.randomUUID(), null);
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
 		classUnderTest.getGraveyard().put(one.cardId(), one);
 
@@ -44,10 +45,10 @@ class PlayerTest {
 
 	@Test
 	void exileTopX() {
-		final Card one = new Card("1");
-		final Card two = new Card("2");
-		final Card three = new Card("3");
-		final Card four = new Card("4");
+		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card two = new Card("2", UUID.randomUUID(), null);
+		final Card three = new Card("3", UUID.randomUUID(), null);
+		final Card four = new Card("4", UUID.randomUUID(), null);
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
 		classUnderTest.getExile().put(one.cardId(), one);
 
@@ -64,10 +65,10 @@ class PlayerTest {
 
 	@Test
 	void drawX() {
-		final Card one = new Card("1");
-		final Card two = new Card("2");
-		final Card three = new Card("3");
-		final Card four = new Card("4");
+		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card two = new Card("2", UUID.randomUUID(), null);
+		final Card three = new Card("3", UUID.randomUUID(), null);
+		final Card four = new Card("4", UUID.randomUUID(), null);
 		when(library.removeTopX(3)).thenReturn(List.of(two, three, four));
 		classUnderTest.getHand().put(one.cardId(), one);
 

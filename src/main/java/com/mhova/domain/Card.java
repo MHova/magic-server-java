@@ -1,4 +1,7 @@
 package com.mhova.domain;
 
-public record Card(String cardId) {
+import java.net.URI;
+import java.util.UUID;
+
+public record Card(String cardId, UUID scryfallId, URI imageLocation) {
 }

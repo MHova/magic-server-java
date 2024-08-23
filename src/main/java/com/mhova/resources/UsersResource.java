@@ -7,6 +7,7 @@ import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,7 +82,7 @@ public class UsersResource {
 		// https://github.com/OWASP/java-html-sanitizer
 		final User userToInsert = new User(newUser.name(),
 				HashedPassword.fromRaw(newUser.password()),
-				List.of(Role.PLAYER));
+				List.of(Role.PLAYER), Collections.emptyList());
 
 		try {
 			db.getCollection("users", User.class).insertOne(userToInsert);

@@ -2,6 +2,7 @@ package com.mhova.auth;
 
 import static com.mongodb.MongoClientSettings.getDefaultCodecRegistry;
 import static com.mongodb.client.model.Filters.eq;
+import static org.bson.codecs.configuration.CodecRegistries.fromCodecs;
 import static org.bson.codecs.configuration.CodecRegistries.fromProviders;
 import static org.bson.codecs.configuration.CodecRegistries.fromRegistries;
 
@@ -32,6 +33,7 @@ public class AuthenticatorImpl
 				.register(ClassModel.builder(User.class).build())
 				.automatic(true).build();
 		final CodecRegistry pojoCodecRegistry = fromRegistries(
+				fromCodecs(new HashedPassword.HashedPasswordCodec()),
 				getDefaultCodecRegistry(), fromProviders(pojoCodecProvider));
 		this.db = mongoClient.getDatabase("test")
 				.withCodecRegistry(pojoCodecRegistry);
@@ -44,8 +46,8 @@ public class AuthenticatorImpl
 				.find(eq("_id", credentials.getUsername()));
 		final Optional<User> maybeUser = Optional.ofNullable(results.first());
 
-		if(maybeUser.isPresent() && maybeUser.get().getEncryptedPassword()
-				.equals(credentials.getPassword())) {
+		if(maybeUser.isPresent() && maybeUser.get().getHashedPassword()
+				.equalsRaw(credentials.getPassword())) {
 			return maybeUser;
 		}
 

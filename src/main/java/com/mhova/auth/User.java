@@ -11,17 +11,16 @@ public class User implements Principal {
 	@BsonId
 	private final String name;
 
-	// TODO: make this typesafe
-	private final String encryptedPassword;
+	private final HashedPassword hashedPassword;
 
 	private final List<Role> roles;
 
 	@BsonCreator
 	public User(@BsonId final String name,
-			@BsonProperty("encryptedPassword") final String encryptedPassword,
+			@BsonProperty("hashedPassword") final HashedPassword hashedPassword,
 			@BsonProperty("roles") final List<Role> roles) {
 		this.name = name;
-		this.encryptedPassword = encryptedPassword;
+		this.hashedPassword = hashedPassword;
 		this.roles = roles;
 	}
 
@@ -30,8 +29,8 @@ public class User implements Principal {
 		return name;
 	}
 
-	public String getEncryptedPassword() {
-		return encryptedPassword;
+	public HashedPassword getHashedPassword() {
+		return hashedPassword;
 	}
 
 	public List<Role> getRoles() {

@@ -3,7 +3,7 @@ Java implementation of a Magic: the Gathering gameplay server.
 TODO:
 - Player accounts
 - Deck import
-- Scryfall integration (probably just one-time bulk data import)
+- Scryfall one-time bulk data import (exclude art cards)
 - Game creation
     - Player 1 imports deck then creates game
     - Player 2 finds game

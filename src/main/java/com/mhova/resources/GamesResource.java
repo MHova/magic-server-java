@@ -73,19 +73,19 @@ public class GamesResource {
 		final URI scryfall = new URI(
 				"https://cards.scryfall.io/small/front/6/d/6da045f8-6278-4c84-9d39-025adf0789c1.jpg?1562404626");
 
-		final Card card1 = new Card("one_1", UUID.randomUUID(), scryfall);
-		final Card card2 = new Card("one_2", UUID.randomUUID(), scryfall);
-		final Card card3 = new Card("one_3", UUID.randomUUID(), scryfall);
+		final Card card1 = new Card("one_1", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card2 = new Card("one_2", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card3 = new Card("one_3", "Evolving Wilds", UUID.randomUUID(), scryfall);
 		final Library library1 = new Library(List.of(card1, card2, card3));
 
-		final Card card4 = new Card("one_4", UUID.randomUUID(), scryfall);
-		final Card card5 = new Card("one_5", UUID.randomUUID(), scryfall);
-		final Card card6 = new Card("one_6", UUID.randomUUID(), scryfall);
-		final Card card7 = new Card("one_7", UUID.randomUUID(), scryfall);
-		final Card card8 = new Card("one_8", UUID.randomUUID(), scryfall);
-		final Card card9 = new Card("one_9", UUID.randomUUID(), scryfall);
-		final Card card10 = new Card("one_10", UUID.randomUUID(), scryfall);
-		final Card card11 = new Card("one_11", UUID.randomUUID(), scryfall);
+		final Card card4 = new Card("one_4", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card5 = new Card("one_5", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card6 = new Card("one_6", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card7 = new Card("one_7", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card8 = new Card("one_8", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card9 = new Card("one_9", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card10 = new Card("one_10", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card11 = new Card("one_11", "Evolving Wilds", UUID.randomUUID(), scryfall);
 
 		final LinkedHashMap<String, Card> graveyard1 = new LinkedHashMap<>();
 		graveyard1.put(card4.cardId(), card4);
@@ -108,19 +108,19 @@ public class GamesResource {
 
 		// Player 2
 
-		final Card card12 = new Card("one_12", UUID.randomUUID(), scryfall);
-		final Card card13 = new Card("one_13", UUID.randomUUID(), scryfall);
-		final Card card14 = new Card("one_14", UUID.randomUUID(), scryfall);
+		final Card card12 = new Card("one_12", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card13 = new Card("one_13", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card14 = new Card("one_14", "Evolving Wilds", UUID.randomUUID(), scryfall);
 		final Library library2 = new Library(List.of(card12, card13, card14));
 
-		final Card card15 = new Card("one_15", UUID.randomUUID(), scryfall);
-		final Card card16 = new Card("one_16", UUID.randomUUID(), scryfall);
-		final Card card17 = new Card("one_17", UUID.randomUUID(), scryfall);
-		final Card card18 = new Card("one_18", UUID.randomUUID(), scryfall);
-		final Card card19 = new Card("one_19", UUID.randomUUID(), scryfall);
-		final Card card20 = new Card("one_20", UUID.randomUUID(), scryfall);
-		final Card card21 = new Card("one_21", UUID.randomUUID(), scryfall);
-		final Card card22 = new Card("one_22", UUID.randomUUID(), scryfall);
+		final Card card15 = new Card("one_15", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card16 = new Card("one_16", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card17 = new Card("one_17", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card18 = new Card("one_18", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card19 = new Card("one_19", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card20 = new Card("one_20", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card21 = new Card("one_21", "Evolving Wilds", UUID.randomUUID(), scryfall);
+		final Card card22 = new Card("one_22", "Evolving Wilds", UUID.randomUUID(), scryfall);
 
 		final LinkedHashMap<String, Card> graveyard2 = new LinkedHashMap<>();
 		graveyard2.put(card4.cardId(), card15);

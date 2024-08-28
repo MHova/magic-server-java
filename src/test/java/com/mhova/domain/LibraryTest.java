@@ -15,10 +15,10 @@ class LibraryTest {
 
 	@Test
 	void addToTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(two);
@@ -36,10 +36,10 @@ class LibraryTest {
 
 	@Test
 	void addSecondFromTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -57,10 +57,10 @@ class LibraryTest {
 
 	@Test
 	void addThirdFromTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -78,10 +78,10 @@ class LibraryTest {
 
 	@Test
 	void addFourthFromTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -99,10 +99,10 @@ class LibraryTest {
 
 	@Test
 	void addFifthFromTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -120,10 +120,10 @@ class LibraryTest {
 
 	@Test
 	void treatZeroXAsAddToTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(two);
@@ -141,10 +141,10 @@ class LibraryTest {
 
 	@Test
 	void treatNegativeXAsAddToTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(two);
@@ -162,7 +162,7 @@ class LibraryTest {
 
 	@Test
 	void addNegativeXToEmptyLibrary() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
 		classUnderTest = new Library(Collections.emptyList());
 		classUnderTest.putCardXFromTop(-1, one);
 		final List<Card> result = classUnderTest.getDeck();
@@ -172,7 +172,7 @@ class LibraryTest {
 
 	@Test
 	void addZeroToEmptyLibrary() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
 		classUnderTest = new Library(Collections.emptyList());
 		classUnderTest.putCardXFromTop(0, one);
 		final List<Card> result = classUnderTest.getDeck();
@@ -182,7 +182,7 @@ class LibraryTest {
 
 	@Test
 	void addToTopToEmptyLibrary() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
 		classUnderTest = new Library(Collections.emptyList());
 		classUnderTest.putCardXFromTop(1, one);
 		final List<Card> result = classUnderTest.getDeck();
@@ -192,10 +192,10 @@ class LibraryTest {
 
 	@Test
 	void putCardOnTop() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(two);
@@ -213,10 +213,10 @@ class LibraryTest {
 
 	@Test
 	void removeTopX() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -244,10 +244,10 @@ class LibraryTest {
 
 	@Test
 	void removeTooManyFromTopX() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);
@@ -268,10 +268,10 @@ class LibraryTest {
 
 	@Test
 	void lookAtTopX() {
-		final Card one = new Card("1", UUID.randomUUID(), null);
-		final Card two = new Card("2", UUID.randomUUID(), null);
-		final Card three = new Card("3", UUID.randomUUID(), null);
-		final Card four = new Card("4", UUID.randomUUID(), null);
+		final Card one = new Card("1", null, UUID.randomUUID(), null);
+		final Card two = new Card("2", null, UUID.randomUUID(), null);
+		final Card three = new Card("3", null, UUID.randomUUID(), null);
+		final Card four = new Card("4", null, UUID.randomUUID(), null);
 
 		final List<Card> cards = new LinkedList<>();
 		cards.add(one);

@@ -1,6 +1,5 @@
-template: Hello, %s!
-defaultName: Stranger
 mongoDB:
-
    host: localhost
    port: 27017
+
+authenticationCachePolicy: maximumSize=10000, expireAfterAccess=10m

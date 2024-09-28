@@ -11,6 +11,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import java.util.LinkedHashMap;
+import java.util.UUID;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -53,7 +54,7 @@ class TwoPlayerBoardTest {
 	@Test
 	void moveCard() {
 		final String id = "123";
-		final Card card = new Card(id);
+		final Card card = new Card(id, null, UUID.randomUUID(), null);
 		hand2.put(id, card);
 		boolean retVal = classUnderTest.moveCard(UnorderedZone.HAND_2,
 				UnorderedZone.BATTLEFIELD_2, id);
@@ -65,7 +66,7 @@ class TwoPlayerBoardTest {
 	@Test
 	void moveCardToBottom() {
 		final String id = "123";
-		final Card card = new Card(id);
+		final Card card = new Card(id, null, UUID.randomUUID(), null);
 		battlefield1.put(id, card);
 		boolean retVal = classUnderTest.moveCardToBottom(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, id);
@@ -85,7 +86,7 @@ class TwoPlayerBoardTest {
 	@Test
 	void moveCardToTop() {
 		final String id = "123";
-		final Card card = new Card(id);
+		final Card card = new Card(id, null, UUID.randomUUID(), null);
 		battlefield1.put(id, card);
 		boolean retVal = classUnderTest.moveCardToTop(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, id);
@@ -105,7 +106,7 @@ class TwoPlayerBoardTest {
 	@Test
 	void moveCardXFromTop() {
 		final String id = "123";
-		final Card card = new Card(id);
+		final Card card = new Card(id, null, UUID.randomUUID(), null);
 		battlefield1.put(id, card);
 		boolean retVal = classUnderTest.moveCardXFromTop(
 				UnorderedZone.BATTLEFIELD_1, Players.PLAYER_1, 2, id);
